@@ -18,7 +18,7 @@ Before integrating the MCP plugin, ensure you have:
 
 - **Tauri v2** application (not v1)
 - **Rust** toolchain (latest stable)
-- **Node.js** 18+ and pnpm (or npm/yarn)
+- **Node.js** 18+ and [bun](https://bun.sh)
 - **Tauri CLI v2**: `cargo install tauri-cli --version "^2.0.0"`
 - **Claude Code, Cursor, or Cline** (MCP-compatible AI agent)
 
@@ -37,14 +37,14 @@ echo ".tauri-plugin-mcp/" >> .gitignore
 
 # Install and build
 cd .tauri-plugin-mcp
-pnpm install
-pnpm run build
-pnpm run build-plugin
+bun install
+bun run build
+bun run build-plugin
 
 # Build the TypeScript MCP server
 cd mcp-server-ts
-pnpm install
-pnpm build
+bun install
+bun build
 cd ../..
 ```
 
@@ -102,7 +102,7 @@ Edit `package.json`:
 
 Install dependencies:
 ```bash
-pnpm install
+bun install
 ```
 
 ### Step 4: Register Plugin in main.rs
@@ -219,7 +219,7 @@ Create `.claude/mcp-config.json` in your project root (recommended for project-l
 cargo tauri dev --features mcp
 
 # Or use the script from package.json
-pnpm run dev:mcp
+bun run dev:mcp
 ```
 
 **Check for success:**
@@ -410,7 +410,7 @@ rm -f /tmp/yourapp-mcp.sock
 pkill -f "tauri dev"
 
 # Restart
-pnpm run dev:mcp
+bun run dev:mcp
 ```
 
 **Prevention**: Add to plugin initialization (if not already there):
@@ -430,12 +430,12 @@ if socket_path.exists() {
 
 **Solution**:
 
-1. Verify app is running: `pnpm run dev:mcp`
+1. Verify app is running: `bun run dev:mcp`
 2. Check socket exists: `ls -l /tmp/yourapp-mcp.sock`
 3. Rebuild MCP server:
    ```bash
    cd .tauri-plugin-mcp/mcp-server-ts
-   pnpm build
+   bun build
    ```
 4. Reload Claude Code MCP configuration
 5. Check Claude Code console for connection errors
@@ -683,7 +683,7 @@ Document MCP usage in your project:
 
 Start the app with MCP debugging:
 ```bash
-pnpm run dev:mcp
+bun run dev:mcp
 ```
 
 This enables AI-assisted testing and debugging.
@@ -729,15 +729,15 @@ jobs:
         run: cargo install tauri-cli --version "^2.0.0"
 
       - name: Install dependencies
-        run: pnpm install
+        run: bun install
 
       - name: Build MCP plugin
         run: |
           cd .tauri-plugin-mcp
-          pnpm install && pnpm run build && pnpm run build-plugin
+          bun install && bun run build && bun run build-plugin
 
       - name: Start app with MCP
-        run: pnpm run dev:mcp &
+        run: bun run dev:mcp &
 
       - name: Wait for socket
         run: timeout 30 bash -c 'until [ -S /tmp/yourapp-mcp.sock ]; do sleep 1; done'

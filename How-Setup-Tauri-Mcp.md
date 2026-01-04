@@ -15,7 +15,7 @@ The Tauri MCP (Model Context Protocol) plugin enables AI assistants like Claude 
 ## Prerequisites
 
 - Tauri v2 application
-- Node.js 18+ with pnpm (or npm/yarn)
+- Node.js 18+ with [bun](https://bun.sh)
 - Rust toolchain (latest stable)
 - The tauri-plugin-mcp repository cloned or added as a submodule
 
@@ -27,8 +27,8 @@ The Tauri MCP (Model Context Protocol) plugin enables AI assistants like Claude 
 
 ```bash
 cd .tauri-plugin-mcp
-pnpm install
-pnpm build
+bun install
+bun build
 ```
 
 This creates the JavaScript module in `.tauri-plugin-mcp/dist-js/`:
@@ -133,10 +133,10 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
 
 ```bash
 # Force reinstall to ensure proper linking
-pnpm install --force
+bun install --force
 ```
 
-**Why `--force`?** Ensures pnpm properly resolves and links the local `file:` dependency.
+**Why `--force`?** Ensures bun properly resolves and links the local `file:` dependency.
 
 ### 6. Configure MCP Server in Claude Code
 
@@ -162,8 +162,8 @@ pnpm install --force
 
 ```bash
 cd .tauri-plugin-mcp/mcp-server-ts
-pnpm install
-pnpm build
+bun install
+bun build
 ```
 
 Verify:
@@ -177,8 +177,8 @@ ls -la .tauri-plugin-mcp/mcp-server-ts/build/index.js
 # Option 1: Use Tauri CLI directly
 ./node_modules/.bin/tauri dev --features mcp
 
-# Option 2: Add npm script to package.json
-pnpm dev:mcp
+# Option 2: Add script to package.json
+bun dev:mcp
 ```
 
 **Add to `package.json` scripts:**
@@ -233,9 +233,9 @@ mcp__tauri-mcp__execute_js({
 **Solution:**
 ```bash
 cd .tauri-plugin-mcp
-pnpm build
+bun build
 cd ..
-pnpm install --force
+bun install --force
 ```
 
 ### Issue 2: MCP Commands Timeout
@@ -264,7 +264,7 @@ pnpm install --force
 
 **Cause:** Vite needs to restart to detect new dependencies.
 
-**Solution:** Kill and restart the dev server after running `pnpm install`.
+**Solution:** Kill and restart the dev server after running `bun install`.
 
 ## Architecture Overview
 
@@ -318,7 +318,7 @@ pnpm install --force
 2. **Use `--features mcp` flag** when running in development
 3. **Keep socket paths consistent** between Rust config and `.mcp.json`
 4. **Call `setupPluginListeners()` early** in your frontend initialization
-5. **Use `pnpm install --force`** if you encounter resolution issues
+5. **Use `bun install --force`** if you encounter resolution issues
 6. **Verify the build** by checking for `dist-js/index.js` and `mcp-server-ts/build/index.js`
 7. **Restart Vite** after installing the plugin dependency
 
@@ -376,7 +376,7 @@ const logs = await mcp__tauri-mcp__get_console_logs({ window_label: "main" });
 - [ ] Guest-js module built (`dist-js/index.js` exists)
 - [ ] MCP server built (`mcp-server-ts/build/index.js` exists)
 - [ ] `package.json` has `"tauri-plugin-mcp": "file:./.tauri-plugin-mcp"`
-- [ ] Dependencies installed with `pnpm install --force`
+- [ ] Dependencies installed with `bun install --force`
 - [ ] `setupPluginListeners()` called in `src/main.tsx`
 - [ ] App running with `--features mcp` flag
 - [ ] Socket path consistent between Rust and `.mcp.json`

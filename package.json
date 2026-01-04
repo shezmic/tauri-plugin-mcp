@@ -19,8 +19,8 @@
   "scripts": {
     "build": "rollup -c",
     "build-plugin": "cargo build --release",
-    "prepublishOnly": "pnpm build",
-    "pretest": "pnpm build"
+    "prepublishOnly": "bun run build",
+    "pretest": "bun run build"
   },
   "dependencies": {
     "@tauri-apps/api": ">=2.0.0-beta.6"

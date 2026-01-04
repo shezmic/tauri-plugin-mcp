@@ -14,7 +14,7 @@ Once set up, you can ask AI agents like Claude Code to:
 ## Prerequisites
 
 - Tauri v2 application (already set up)
-- Node.js 18+ and pnpm
+- Node.js 18+ and [bun](https://bun.sh)
 - Claude Code, Cursor, or another MCP-compatible AI agent
 
 ## Installation
@@ -30,13 +30,13 @@ git clone https://github.com/yourusername/tauri-plugin-mcp .tauri-plugin-mcp
 
 # Build it
 cd .tauri-plugin-mcp
-pnpm install
-pnpm run build && pnpm run build-plugin
+bun install
+bun run build && bun run build-plugin
 
 # Build the MCP server
 cd mcp-server-ts
-pnpm install
-pnpm build
+bun install
+bun build
 cd ../..
 ```
 
@@ -67,7 +67,7 @@ Add to `package.json`:
 
 Then run:
 ```bash
-pnpm install
+bun install
 ```
 
 ### Step 3: Register the Plugin
@@ -157,7 +157,7 @@ Add to your `package.json`:
 ### 1. Start Your App with MCP Enabled
 
 ```bash
-pnpm run dev:mcp
+bun run dev:mcp
 # or
 cargo tauri dev --features mcp
 ```
@@ -245,7 +245,7 @@ Try one of these prompts:
 ### "Connection refused"
 
 **Check:**
-1. App is running: `pnpm run dev:mcp`
+1. App is running: `bun run dev:mcp`
 2. Socket file exists: `ls -l /tmp/yourapp-mcp.sock`
 3. Look for "MCP plugin enabled" in app logs
 
@@ -253,7 +253,7 @@ Try one of these prompts:
 ```bash
 # Restart the app
 pkill -f "tauri dev"
-pnpm run dev:mcp
+bun run dev:mcp
 ```
 
 ### "Screenshot is black/empty"
@@ -269,7 +269,7 @@ pnpm run dev:mcp
 ```bash
 # Rebuild MCP server
 cd .tauri-plugin-mcp/mcp-server-ts
-pnpm build
+bun build
 ```
 
 ### "Socket already in use"

@@ -226,7 +226,7 @@ Catch runtime errors:
 |---------|----------|
 | Connection refused | Verify app is running with `--features mcp` |
 | Black screenshots | Check window title matches config |
-| Can't find tool | Rebuild MCP server: `cd mcp-server-ts && pnpm build` |
+| Can't find tool | Rebuild MCP server: `cd mcp-server-ts && bun build` |
 | Socket already in use | `rm -f /tmp/yourapp-mcp.sock` |
 
 Full troubleshooting: [Integration Guide - Troubleshooting](INTEGRATION_GUIDE.md#troubleshooting)

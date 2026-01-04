@@ -87,7 +87,7 @@ tauri-plugin-mcp = { path = "../.tauri-plugin-mcp" }
 
 # 3. Build the MCP server
 cd .tauri-plugin-mcp/mcp-server-ts
-pnpm install && pnpm build
+bun install && bun build
 
 # 4. Configure your AI agent (Claude Code/Cursor/Cline)
 # Add to ~/.config/claude/claude_code_config.json:
@@ -101,7 +101,7 @@ pnpm install && pnpm build
 }
 
 # 5. Start your Tauri app and test!
-pnpm run tauri dev
+bun tauri dev
 ```
 
 Now AI agents can debug your app! See [Getting Started](#getting-started) for detailed setup.
@@ -471,7 +471,7 @@ Detailed parameter specifications for each MCP tool:
 
 - **Rust** (latest stable): For Tauri development
 - **Node.js** 18+: For the MCP server
-- **pnpm** (recommended) or npm: Package management
+- **[Bun](https://bun.sh/)**: Package management and runtime
 - **Tauri CLI**: `cargo install tauri-cli`
 
 ### Step 1: Build the Plugin
@@ -480,10 +480,10 @@ First, build both the Rust plugin and TypeScript MCP server:
 
 ```bash
 # Install dependencies
-pnpm install
+bun install
 
 # Build the Rust plugin and TypeScript server
-pnpm run build && pnpm run build-plugin
+bun run build && bun run build-plugin
 ```
 
 This will:
@@ -575,8 +575,8 @@ The MCP server acts as a bridge between AI agents (Claude Code, Cursor, Cline) a
 
 ```bash
 cd mcp-server-ts
-pnpm install
-pnpm build
+bun install
+bun build
 ```
 
 This creates `mcp-server-ts/build/index.js`, the entry point for AI agents.
@@ -814,7 +814,7 @@ Before diving into specific issues, follow this diagnostic checklist:
 
 1. **Verify Tauri app is running in debug mode**
    ```bash
-   pnpm run tauri dev
+   bun tauri dev
    # Look for log: "MCP plugin enabled for development"
    ```
 
@@ -848,7 +848,7 @@ Before diving into specific issues, follow this diagnostic checklist:
 
 **Causes & Solutions:**
 
-- **Tauri app not running**: Start your app with `pnpm run tauri dev`
+- **Tauri app not running**: Start your app with `bun tauri dev`
 - **Socket server disabled**: Verify `.start_socket_server(true)` in plugin config
 - **Mismatched connection modes**: Ensure both MCP server and Tauri plugin use the same mode (IPC or TCP)
 - **Port mismatch (TCP)**: Verify port numbers match exactly:
@@ -931,7 +931,7 @@ netstat -an | findstr :4000  # Windows
 ```bash
 cd tauri-plugin-mcp
 git pull
-pnpm run build && pnpm run build-plugin
+bun run build && bun run build-plugin
 ```
 
 #### Issue 5: "Tool not found" or tool calls fail
@@ -943,7 +943,7 @@ pnpm run build && pnpm run build-plugin
 - **MCP server not built**: Rebuild the MCP server
   ```bash
   cd mcp-server-ts
-  pnpm build
+  bun build
   ```
 
 - **Tool not registered**: Check `mcp-server-ts/src/tools/index.ts` includes the tool
@@ -1537,7 +1537,7 @@ Verify the plugin is excluded from production:
 
 ```bash
 # Build for production
-pnpm run tauri build
+bun tauri build
 
 # Check the binary doesn't include MCP symbols (Linux/macOS)
 nm -a ./target/release/myapp | grep -i mcp
@@ -1766,14 +1766,14 @@ git clone https://github.com/yourusername/tauri-plugin-mcp
 cd tauri-plugin-mcp
 
 # Install dependencies
-pnpm install
+bun install
 
 # Build plugin and server
-pnpm run build && pnpm run build-plugin
+bun run build && bun run build-plugin
 
 # Run tests
 cargo test
-cd mcp-server-ts && pnpm test
+cd mcp-server-ts && bun test
 ```
 
 ### Development Workflow
@@ -1782,7 +1782,7 @@ cd mcp-server-ts && pnpm test
 
 **Required Tools:**
 - Rust toolchain (latest stable)
-- Node.js 18+ and pnpm
+- Node.js 18+ and [bun](https://bun.sh)
 - A Tauri test application
 - MCP Inspector for testing: `npx @modelcontextprotocol/inspector`
 
@@ -1814,7 +1814,7 @@ cargo test
 
 # 5. Test in real app
 cd ../your-tauri-app
-pnpm run tauri dev
+bun tauri dev
 ```
 
 **For TypeScript Changes (MCP Server):**
@@ -1826,14 +1826,14 @@ cd mcp-server-ts
 vim src/tools/my_tool.ts
 
 # 2. Run format and lint
-pnpm run lint
-pnpm run format
+bun run lint
+bun run format
 
 # 3. Build
-pnpm build
+bun build
 
 # 4. Test
-pnpm test
+bun test
 
 # 5. Test with MCP Inspector
 npx @modelcontextprotocol/inspector node build/index.js
@@ -1847,7 +1847,7 @@ npx @modelcontextprotocol/inspector node build/index.js
 cargo test
 
 # TypeScript unit tests
-cd mcp-server-ts && pnpm test
+cd mcp-server-ts && bun test
 ```
 
 **Integration Testing:**
@@ -1855,7 +1855,7 @@ cd mcp-server-ts && pnpm test
 1. Start your Tauri test app with the plugin:
    ```bash
    cd your-test-app
-   pnpm run tauri dev
+   bun tauri dev
    ```
 
 2. Use MCP Inspector to test tools:
@@ -1890,7 +1890,7 @@ Enable verbose logging in your test app:
 
 Then run with:
 ```bash
-RUST_LOG=debug pnpm run tauri dev
+RUST_LOG=debug bun tauri dev
 ```
 
 **TypeScript Debugging:**
@@ -1908,9 +1908,9 @@ node --inspect build/index.js
 
 #### 5. Pre-Commit Checklist
 
-- [ ] Code formatted (`cargo fmt`, `pnpm run format`)
-- [ ] Lints pass (`cargo clippy`, `pnpm run lint`)
-- [ ] Tests pass (`cargo test`, `pnpm test`)
+- [ ] Code formatted (`cargo fmt`, `bun run format`)
+- [ ] Lints pass (`cargo clippy`, `bun run lint`)
+- [ ] Tests pass (`cargo test`, `bun test`)
 - [ ] Changes tested in real Tauri app
 - [ ] Documentation updated (README, doc comments)
 - [ ] CHANGELOG.md updated (if applicable)
@@ -2081,7 +2081,7 @@ Add to README:
   - Run: `cargo fmt && cargo clippy`
   - Fix all clippy warnings before committing
 - **TypeScript**: Use ESLint and Prettier configurations
-  - Run: `pnpm run lint && pnpm run format`
+  - Run: `bun run lint && bun run format`
 - **Commits**: Use conventional commit format
   - `feat:` for new features
   - `fix:` for bug fixes
@@ -2097,7 +2097,7 @@ cargo test
 
 # TypeScript tests
 cd mcp-server-ts
-pnpm test
+bun test
 
 # Integration tests with MCP Inspector
 cd mcp-server-ts
@@ -2105,7 +2105,7 @@ npx @modelcontextprotocol/inspector node build/index.js
 
 # Integration tests with real app
 cd examples/test-app
-pnpm run tauri dev
+bun tauri dev
 # Then test with your AI agent
 ```
 
@@ -2114,19 +2114,19 @@ pnpm run tauri dev
 **Rebuilding after changes:**
 ```bash
 # Full rebuild
-pnpm run build && pnpm run build-plugin
+bun run build && bun run build-plugin
 
 # Rust only
 cargo build
 
 # TypeScript only
-cd mcp-server-ts && pnpm build
+cd mcp-server-ts && bun build
 ```
 
 **Running with verbose logging:**
 ```bash
 # Tauri app with debug logs
-RUST_LOG=debug pnpm run tauri dev
+RUST_LOG=debug bun tauri dev
 
 # MCP server with debug logs
 DEBUG=* node build/index.js
