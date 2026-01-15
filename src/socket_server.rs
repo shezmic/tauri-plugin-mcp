@@ -157,8 +157,8 @@ impl<R: Runtime> SocketServer<R> {
 
         let listener = match &self.socket_type {
             SocketType::Ipc { path } => {
-                // Get the socket path for cleanup
-                let socket_path = if let Some(p) = path {
+                // Get the socket path for cleanup (prefixed with _ for Windows where it's unused)
+                let _socket_path = if let Some(p) = path {
                     p.clone()
                 } else {
                     std::env::temp_dir().join("tauri-mcp.sock")
@@ -166,9 +166,9 @@ impl<R: Runtime> SocketServer<R> {
 
                 // Clean up any stale socket file on Unix platforms
                 #[cfg(not(target_os = "windows"))]
-                if socket_path.exists() {
-                    info!("[TAURI_MCP] Removing stale socket file: {:?}", socket_path);
-                    std::fs::remove_file(&socket_path)
+                if _socket_path.exists() {
+                    info!("[TAURI_MCP] Removing stale socket file: {:?}", _socket_path);
+                    std::fs::remove_file(&_socket_path)
                         .map_err(|e| Error::Io { message: format!("Failed to remove stale socket: {}", e) })?;
                 }
 
